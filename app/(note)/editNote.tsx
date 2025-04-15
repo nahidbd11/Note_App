@@ -29,7 +29,7 @@ const AddNote = () => {
                 />
 
                 <TouchableOpacity className="bg-accent rounded-lg p-4  mt-10">
-                    <Text className="text-light-200 text-center text-xl font-bold">Save</Text>
+                    <Text className="text-light-200 text-center text-xl font-bold">Update Note</Text>
                 </TouchableOpacity>
 
             </View>

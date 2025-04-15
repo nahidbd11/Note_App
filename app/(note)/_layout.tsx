@@ -28,6 +28,26 @@ const _Layout = () => {
 
 
             />
+            {/* Override for editNote */}
+            <Stack.Screen
+                name="editNote"
+                options={{
+                    headerShown: true,
+                    title: 'Edit Note',
+                    headerTitle: () => (
+                        <View className="justify-center  ">
+                            <Text className="text-primary font-bold text-lg">Edit Note</Text>
+                            <Text className="text-primary opacity-50  text-sm">Update your note here</Text>
+                        </View>
+                    ),
+
+                    headerTransparent: true,
+                    headerShadowVisible: false,
+                }
+                }
+
+
+            />
         </Stack>
     )
 }
