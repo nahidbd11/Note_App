@@ -1,10 +1,12 @@
 import {Stack} from "expo-router";
 import '../global.css'
 import {StatusBar} from "react-native";
+import {NoteContextProvider} from "@/contexts/NoteContext";
 
 
 export default function RootLayout() {
-    return <>
+    return <NoteContextProvider>
+
         <StatusBar
             hidden={false}
             backgroundColor="#f1f0f5"
@@ -13,14 +15,13 @@ export default function RootLayout() {
 
             <Stack.Screen
                 name="(note)"
-                options={
-                    {
-                        headerShown: false,
-                    }
-                }
+                options={{
+                    headerShown: false,
+                }}
             />
 
         </Stack>
-    </>
+    </NoteContextProvider>
+
 
 }

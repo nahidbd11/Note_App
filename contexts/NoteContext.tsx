@@ -1,4 +1,4 @@
-import {createContext, useState} from "react";
+import {createContext, useEffect, useState} from "react";
 import {NoteModel} from "@/Models/NoteModel";
 import {noteStorage} from "@/services/NoteStorage";
 
@@ -11,7 +11,7 @@ interface NoteContextType {
     refreshNotes: () => void;
 }
 
-const NoteContext = createContext<NoteContextType>({
+export const NoteContext = createContext<NoteContextType>({
     notes: [], addNote: () => {
     }, updateNote: () => {
     }, deleteNote: () => {
@@ -29,8 +29,10 @@ export const NoteContextProvider = ({children}: any) => {
     }
 
     const addNote = (note: NoteModel) => {
+        console.log("addNote", note)
         noteStorage.saveNote(note)
         refreshNotes()
+
     }
 
     const updateNote = (note: NoteModel) => {
@@ -42,6 +44,10 @@ export const NoteContextProvider = ({children}: any) => {
         refreshNotes()
     }
 
+
+     useEffect(()=>{
+         refreshNotes()
+     },[])
 
     return <NoteContext.Provider value={{
         notes, addNote, deleteNote, updateNote, refreshNotes

@@ -2,9 +2,14 @@ import {FlatList, Text, TouchableOpacity, View} from "react-native";
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import MaterialIconButton from "@/components/MaterialIconButton";
 import {useRouter} from "expo-router";
+import {useNote} from "@/hooks/useNote";
+import {NoteModel} from "@/Models/NoteModel";
+import {useEffect} from "react";
 
 
 function NoteActionComponent(props: { onEditPress: () => void, onDeletePress: () => void }) {
+
+
     return <>
         <MaterialIconButton
             icon="edit-note"
@@ -37,7 +42,7 @@ class Note {
     }
 }
 
-const FlatItem = ({item}: { item: Note }) => {
+const FlatItem = ({item}: { item: NoteModel }) => {
     const router = useRouter();
 
     return <View className="bg-light-200 rounded-2xl p-4 mt-2 ">
@@ -54,19 +59,19 @@ const FlatItem = ({item}: { item: Note }) => {
 
         </View>
 
-        <Text className="text-primary opacity-50 text-sm mt-1">{item.content}</Text>
+        <Text className="text-primary opacity-50 text-sm mt-1">{item.description}</Text>
     </View>;
 }
 
 
 export default function Index() {
     const router = useRouter();
+    const {notes, deleteNote,updateNote,refreshNotes} = useNote();
+    useEffect(() => {
+        refreshNotes()
+    }, []);
 
-    function getNotes(): Note[] {
-        return [new Note("1", "This is the title of the note 1", "This is the content of the note1", new Date(), new Date()), new Note("2", "This is the title of the note 2", "This is the content of the note2", new Date(), new Date()), new Note("3", "This is the title of the note 3", "This is the content of the note3", new Date(), new Date()), new Note("4", "This is the title of the note 4", "This is the content of the note4", new Date(), new Date()),
 
-        ]
-    }
 
 
     return (<View className="flex-1  bg-light-300   w-full">
@@ -84,7 +89,7 @@ export default function Index() {
             </View>
 
             <FlatList
-                data={getNotes()}
+                data={notes}
                 renderItem={({item}) => <FlatItem item={item}/>}
                 className="mt-2 mr-6"
 

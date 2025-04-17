@@ -3,15 +3,15 @@ import React, {useState} from 'react'
 import CustomTextInput from "@/components/FloatingInputField";
 import {noteStorage} from "@/services/NoteStorage";
 import {NoteModel} from "@/Models/NoteModel";
+import {useNote} from "@/hooks/useNote";
 
 
 const AddNote = () => {
      const [title, setTitle] = useState<string>('');
      const [description, setDescription] = useState<string>('');
-
+      const {addNote}=useNote();
 
     const onClickSave=()=> {
-        console.log(title, description,'😁😁😁😁😁😁');
         const note:NoteModel={
             id: Math.floor(Math.random() * 1000000),
             title,
@@ -19,7 +19,10 @@ const AddNote = () => {
             createdAt:new Date(),
             updatedAt:new Date()
         }
-        noteStorage.saveNote(note);
+        console.log(note)
+
+
+        addNote(note)
     }
 
     return (
@@ -48,7 +51,7 @@ const AddNote = () => {
                     className="mt-4"
                 />
 
-                <TouchableOpacity className="bg-accent rounded-lg p-4  mt-10" onPress={onClickSave}>
+                <TouchableOpacity className="bg-accent rounded-lg p-4  mt-10" onPress={()=>onClickSave()}>
                     <Text className="text-light-200 text-center text-xl font-bold">Save</Text>
                 </TouchableOpacity>
 
