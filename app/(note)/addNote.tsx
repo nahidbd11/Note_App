@@ -1,34 +1,54 @@
 import {SafeAreaView, StyleSheet, TextInput, View, Text, TouchableOpacity} from 'react-native'
-import React from 'react'
+import React, {useState} from 'react'
 import CustomTextInput from "@/components/FloatingInputField";
+import {noteStorage} from "@/services/NoteStorage";
+import {NoteModel} from "@/Models/NoteModel";
 
 
 const AddNote = () => {
+     const [title, setTitle] = useState<string>('');
+     const [description, setDescription] = useState<string>('');
+
+
+    const onClickSave=()=> {
+        console.log(title, description,'😁😁😁😁😁😁');
+        const note:NoteModel={
+            id: Math.floor(Math.random() * 1000000),
+            title,
+            description,
+            createdAt:new Date(),
+            updatedAt:new Date()
+        }
+        noteStorage.saveNote(note);
+    }
+
     return (
         <SafeAreaView className="flex-1 bg-light-300 ">
             <View className="flex-1  ml-6 mt-24 mr-6">
 
                 <Text className={inputLabelStyle}>Title</Text>
                 <CustomTextInput
-                    placeHolder="Label"
-                    value="sdaf"
-                    onChangeText={() => {
+                    placeHolder="enter title"
+                    value={title}
+                    onChangeText={(text) => {
+                          setTitle(text)
                     }}
                     numberOfLines={2}
                     className="mt-4"
                 />
                 <Text className={`${inputLabelStyle} mt-10` }>Description</Text>
                 <CustomTextInput
-                    placeHolder="Label"
-                    value="sdaf"
-                    onChangeText={() => {
+                    placeHolder="your description"
+                    value={description}
+                    onChangeText={(text) => {
+                     setDescription(text)
                     }}
                     numberOfLines={6}
                     multiline={true}
                     className="mt-4"
                 />
 
-                <TouchableOpacity className="bg-accent rounded-lg p-4  mt-10">
+                <TouchableOpacity className="bg-accent rounded-lg p-4  mt-10" onPress={onClickSave}>
                     <Text className="text-light-200 text-center text-xl font-bold">Save</Text>
                 </TouchableOpacity>
 
