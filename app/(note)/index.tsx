@@ -1,4 +1,4 @@
-import {FlatList, Text, TouchableOpacity, View} from "react-native";
+import {FlatList, Text, ToastAndroid, TouchableOpacity, View} from "react-native";
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import MaterialIconButton from "@/components/MaterialIconButton";
 import {useRouter} from "expo-router";
@@ -44,6 +44,12 @@ class Note {
 
 const FlatItem = ({item}: { item: NoteModel }) => {
     const router = useRouter();
+    const {deleteNote} = useNote();
+
+    function onDelete() {
+        deleteNote(item.id);
+        ToastAndroid.showWithGravity("Deleted successfully !!", ToastAndroid.SHORT, ToastAndroid.BOTTOM)
+    }
 
     return <View className="bg-light-200 rounded-2xl p-4 mt-2 ">
         <View className="flex-row   justify-between space-x-6">
@@ -53,7 +59,7 @@ const FlatItem = ({item}: { item: NoteModel }) => {
             <View className="flex-row ml-6 gap-x-2">
                 <NoteActionComponent
                     onEditPress={() => router.navigate('/editNote')}
-                    onDeletePress={() => console.log("Delete Pressed")}
+                    onDeletePress={onDelete}
                 />
             </View>
 
@@ -66,12 +72,10 @@ const FlatItem = ({item}: { item: NoteModel }) => {
 
 export default function Index() {
     const router = useRouter();
-    const {notes, deleteNote,updateNote,refreshNotes} = useNote();
+    const {notes, deleteNote, updateNote, refreshNotes} = useNote();
     useEffect(() => {
         refreshNotes()
     }, []);
-
-
 
 
     return (<View className="flex-1  bg-light-300   w-full">
@@ -89,13 +93,24 @@ export default function Index() {
             </View>
 
             <FlatList
+                keyExtractor={(item) => item.id.toString()}
+                showsVerticalScrollIndicator={false}
                 data={notes}
                 renderItem={({item}) => <FlatItem item={item}/>}
-                className="mt-2 mr-6"
+
+                ListEmptyComponent={() =>
+
+                    <View className="flex-1 items-center justify-center h-[300px]">
+                        <Text className="text-gray-500 text-center text-lg">
+                            You have no notes yet.please add a note
+                        </Text>
+                    </View>
+
+
+                }
+                className="mt-2 mr-6 mb-5"
 
             />
-
-
 
 
         </View>
