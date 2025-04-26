@@ -50,12 +50,13 @@ const styles = StyleSheet.create({
         height: 50,
         fontSize: 16,
         paddingHorizontal: 12,
-        paddingTop: 14,
+
     },
     textArea: {
         height: 120, // you can customize height as needed
-        paddingTop: 12,
         paddingBottom: 12,
+        paddingTop:16
+
     },
 });
 

@@ -58,7 +58,12 @@ const FlatItem = ({item}: { item: NoteModel }) => {
             </Text>
             <View className="flex-row ml-6 gap-x-2">
                 <NoteActionComponent
-                    onEditPress={() => router.navigate('/editNote')}
+                    onEditPress={() => router.navigate({
+                        pathname:'/editNote',
+                        params: {
+                          note:JSON.stringify(item)
+                        }
+                    })}
                     onDeletePress={onDelete}
                 />
             </View>
