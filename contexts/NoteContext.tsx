@@ -8,6 +8,7 @@ interface NoteContextType {
     addNote: (note: NoteModel) => void;
     updateNote: (note: NoteModel) => void;
     deleteNote: (id: number) => void;
+    getNoteById: (id: number) => NoteModel | undefined;
     refreshNotes: () => void;
 }
 
@@ -16,8 +17,9 @@ export const NoteContext = createContext<NoteContextType>({
     }, updateNote: () => {
     }, deleteNote: () => {
     }, refreshNotes: () => {
-    }
-});
+    }, getNoteById: (id: number) => undefined,
+})
+
 
 export const NoteContextProvider = ({children}: any) => {
 
@@ -43,14 +45,17 @@ export const NoteContextProvider = ({children}: any) => {
         noteStorage.deleteNote(id);
         refreshNotes()
     }
+    const getNoteById = (id: number) => {
+        return noteStorage.getDetails(id)
+    }
 
 
-     useEffect(()=>{
-         refreshNotes()
-     },[])
+    useEffect(() => {
+        refreshNotes()
+    }, [])
 
     return <NoteContext.Provider value={{
-        notes, addNote, deleteNote, updateNote, refreshNotes
+        notes, addNote, deleteNote, updateNote, refreshNotes, getNoteById
     }}>
         {children}
     </NoteContext.Provider>

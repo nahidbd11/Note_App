@@ -52,25 +52,31 @@ const FlatItem = ({item}: { item: NoteModel }) => {
     }
 
     return <View className="bg-light-200 rounded-2xl p-4 mt-2 ">
-        <View className="flex-row   justify-between space-x-6">
-            <Text className="text-primary flex-1 w-1/2  text-xl  " numberOfLines={1}>
-                {item.title}
-            </Text>
-            <View className="flex-row ml-6 gap-x-2">
-                <NoteActionComponent
-                    onEditPress={() => router.navigate({
-                        pathname:'/editNote',
-                        params: {
-                          note:JSON.stringify(item)
-                        }
-                    })}
-                    onDeletePress={onDelete}
-                />
+        <TouchableOpacity onPress={() => router.push({
+            pathname: '/(note)/[id]',
+            params: { id: item.id }
+        })}>
+            <View className="flex-row   justify-between space-x-6">
+                <Text className="text-primary flex-1 w-1/2  text-xl  " numberOfLines={1}>
+                    {item.title}
+                </Text>
+                <View className="flex-row ml-6 gap-x-2">
+                    <NoteActionComponent
+                        onEditPress={() => router.navigate({
+                            pathname:'/editNote',
+                            params: {
+                                note:JSON.stringify(item)
+                            }
+                        })}
+                        onDeletePress={onDelete}
+                    />
+                </View>
+
             </View>
 
-        </View>
+            <Text className="text-primary opacity-50 text-sm mt-1" numberOfLines={1}>{item.description}</Text>
+        </TouchableOpacity>
 
-        <Text className="text-primary opacity-50 text-sm mt-1">{item.description}</Text>
     </View>;
 }
 

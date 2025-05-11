@@ -50,7 +50,7 @@ const AddNote = () => {
                 multiline={true}
                 className="mt-4"
             />
-            {isLoading ? <ActivityIndicator  size={"large"} className="mt-10"/> :
+            {isLoading ? <ActivityIndicator size={"large"} className="mt-10"/> :
                 <TouchableOpacity className="bg-accent rounded-lg p-4  mt-10" onPress={() => onClickSave()}>
                     <Text className="text-light-200 text-center text-xl font-bold">Save</Text>
                 </TouchableOpacity>}
